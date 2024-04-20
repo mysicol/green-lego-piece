@@ -1,4 +1,4 @@
-from search_engine_parser import GoogleSearch
+from search_engine_parser import BingSearch
 
 class SearchEngine:
 
@@ -22,13 +22,18 @@ class SearchEngine:
         self.__desc = []
 
         search_args = (query, 1)
-        gsearch = GoogleSearch()
-        gresults = gsearch.search(*search_args)
+        gsearch = BingSearch()
+        gresults_page_1 = gsearch.search(*search_args)
+        search_args = (query, 2)
+        gresults_page_2 = gsearch.search(*search_args)
 
         # Store results in easily accessible format
-        self.__titles.extend(gresults['titles'])
-        self.__links.extend(gresults['links'])
-        self.__desc.extend(gresults['descriptions'])
+        self.__titles.extend(gresults_page_1['titles'])
+        self.__titles.extend(gresults_page_2['titles'])
+        self.__links.extend(gresults_page_1['links'])
+        self.__links.extend(gresults_page_2['links'])
+        self.__desc.extend(gresults_page_1['descriptions'])
+        self.__desc.extend(gresults_page_2['descriptions'])
     
     def prune_results(self, relevance_ratings, relevance_threshold):
         """ Removes specific stored results from last query based on relevance
@@ -76,7 +81,7 @@ class SearchEngine:
         """
         if index < len(self.__titles):
             return self.__titles[index]
-        else :
+        else:
             return None
     
     def get_descriptions(self):
@@ -137,20 +142,37 @@ class SearchEngine:
         - self.__query {string} : Last made query as a string
         """
         return self.__query
+    
+    def get_num_results(self):
+        """Returns number of results received from search query
+        
+        Returns:
+        -----------------
+        - len(self.__titles) {int} : Length of titles, should be the number of results as each result has a title
+        """
+        return len(self.__titles)
 
 
 
 if __name__ == "__main__":
 
-    # Just some simple test code. Won't actually do anything since no query is made
+    # Just some simple test code to show use of functions
     se = SearchEngine()
 
-    print(se.get_last_query())
-    print(se.get_description(1))
-    print(se.get_link(1))
-    print(se.get_title(1))
-    se.prune_results([10, 5, 8], 8)
+    searching = True
+    while searching:
+        query = input("What do you want to search? ")
 
-    print(se.get_titles())
-    print(se.get_descriptions())
-    print(se.get_links())
+        if query == "":
+            exit()
+
+        se.makeQuery(query)
+        print()
+
+        for i in range(se.get_num_results()):
+            print("Result #", (i+1))
+            print("Title:", se.get_title(i))
+            print("Summary: ", se.get_description(i))
+            print("Link: ", se.get_link(i))
+            print("\n")
+
