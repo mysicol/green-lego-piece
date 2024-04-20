@@ -1,9 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Example from "./Components/Example.jsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Layout from "./Components/Layout.jsx";
+import Input from "./Components/Input.jsx";
+import Reliability from "./Components/Reliability.jsx";
+
+let router = createBrowserRouter([
+  {
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <Input />,
+      },
+      {
+        path: "/reliability",
+        element: <Reliability />,
+      },
+    ],
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Example />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
