@@ -19,7 +19,7 @@ def example():
 def input():
     verifact = request.json
 
-    print(verifact) # TODO remove
+    print(verifact) # TODO remove, structure of verifact is: { verifact: "string" }
 
     # TODO turn verifact into a search query, make the search, and then return json below 
 
