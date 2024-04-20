@@ -1,12 +1,9 @@
 import openai
-import dotenv
-import os
+from APIKeys import APIKeys
 
 class GPTInterface:
     def __init__(self):
-        if 'OPENAI_API_KEY' in os.environ:
-            del os.environ['OPENAI_API_KEY']
-        dotenv.load_dotenv()
+        APIKeys.set_var('OPENAI_API_KEY')
         self.__gpt = openai.OpenAI()
         
     def get_summary(self, article_body):
