@@ -1,5 +1,5 @@
 import requests
-from APIKeys import APIKeys
+from back.APIKeys import APIKeys
 
 VAR_NAME = 'NINJAS_API_KEY'
 
