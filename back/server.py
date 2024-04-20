@@ -28,12 +28,14 @@ def input():
                 "reliability": 70,
                 "headArticles": [
                     {
+                        "id": 0,
                         "title": "Title",
                         "reliability": 60,
                         "bias": 50,
                         "summary": "A summary",
                     },
                     {
+                        "id": 1,
                         "title": "22222",
                         "reliability": 2,
                         "bias": 20,
@@ -42,9 +44,10 @@ def input():
                 ],
                 "articles": [
                     {
-                    "title": "Another Title",
-                    "reliability": 30,
-                    "bias": 20,
+                        "id": 0,
+                        "title": "Another Title",
+                        "reliability": 30,
+                        "bias": 20,
                     },
                 ],
             }

@@ -9,6 +9,7 @@ export default function VeriFact() {
     reliability: 0,
     headArticles: [
       {
+        id: 0,
         title: "",
         reliability: 0,
         bias: 0,
@@ -17,12 +18,13 @@ export default function VeriFact() {
     ],
     articles: [
       {
+        id: 0,
         title: "",
         reliability: 0,
         bias: 0,
       },
     ],
-  });
+  }); // default data
 
   let sendForm = async function () {
     let result = await axios.post("/api/input", form);
@@ -32,7 +34,36 @@ export default function VeriFact() {
     setFormSent(true);
   };
 
-  let summaryPage = <div>Summary</div>;
+  let summaryPage = (
+    <div className="summary-container">
+      <div id="summary">
+        <h1>Bias Bar: {summary.average}</h1>
+        <h1>Reliability Bar: {summary.reliability}</h1>
+        <div className="head-article-list">
+          {summary.headArticles.map(
+            ({ id, title, reliability, bias, summary }) => (
+              <div key={id} className="head-article">
+                <div className="head-title">{title}</div>
+                <div className="head-reliability">{reliability}</div>
+                <div className="head-bias">{bias}</div>
+                <div className="head-summary">{summary}</div>
+              </div>
+            )
+          )}
+        </div>
+        <div className="article-list">
+          {summary.articles.map(({ id, title, reliability, bias }) => (
+            <div key={id} className="article">
+              <div className="article-title">{title}</div>
+              <div className="article-reliability">{reliability}</div>
+              <div className="article-bias">{bias}</div>
+            </div>
+          ))}
+        </div>
+        <div className="article-list"></div>
+      </div>
+    </div>
+  );
 
   let formPage = (
     <div className="form-container">
