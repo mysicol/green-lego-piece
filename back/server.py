@@ -19,8 +19,11 @@ def example():
 def input():
     verifact = request.json
 
-    print(verifact) # send query to something, and then return json object 
+    print(verifact) # TODO remove
 
+    # TODO turn verifact into a search query, make the search, and then return json below 
+
+    # example json data
     return jsonify( 
         {
             "summary": {
