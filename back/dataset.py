@@ -25,42 +25,62 @@ class DataNode:
 		return self.bias_value
 
 class DatasetContext:
-	# data should be a dictionary
-	def __init__(self, data):
-		self.data = data
+	def __init__(self, path):
+		self.sourcesDictionary = self.init_data(path)
 
-def parseFile(pathName):
-	sources = []
-	with open(pathName, 'r') as csvFile:
-		csvReader = csv.reader(csvFile)
+	def init_data(self, pathName):
+		sources = self.parseFile(pathName)
+		return self.createDict(sources)
 
-		# Iterate over each row in the CSV file
-		for row in csvReader:
-			name = row[0]
-			domain = row[3]
-			reliability_value = row[1]
-			bias_value = row[2]
-			sources.append(DataNode(name, domain, reliability_value, bias_value))
-	return sources
-		
+	def parseFile(self, pathName):
+		""" Parses the file found from the given path name.
+		Returns a regular list of DataNode objects.
+
+        Parameters:
+        -----------------
+         - pathName {string}: The relative path of the csv data file
+        """
+		sources = []
+		with open(pathName, 'r') as csvFile:
+			csvReader = csv.reader(csvFile)
+
+			# Iterate over each row in the CSV file
+			for row in csvReader:
+				name = row[0]
+				domain = row[3]
+				reliability_value = row[1]
+				bias_value = row[2]
+				sources.append(DataNode(name, domain, reliability_value, bias_value))
+		return sources
+	
+	def createDict(self, source_list):
+		""" Creates a dictionary of the data where the key is the source domain 
+		and the value is the DataNode object holding all data for that source.
+		Returns the new dictionary.
+
+		Parameters:
+		----------------
+		 - source_list {list}: The list of DataNodes to be made into a dictionary
+		"""
+		sources = {}	
+		for source in source_list:	
+			sources[source.get_domain()] = source
+		return sources
+	
+	def get_dictionary(self):
+		return self.sourcesDictionary
+	
+	def get_source(self, queryDomain):
+		return self.sourcesDictionary.get(queryDomain)
+
 
 if __name__ == "__main__":
-	path = "News.csv"
-	# parseFile returns a list of DataNodes. 
-	source_list = parseFile(path)
 
-	# Create a dictionary sources.  [String domainName: DataNode]
-	sources = {}
-	print("for source in sourcelist")
-	for source in source_list:	
-		sources[source.get_domain()] = source
+	dataDictionary = DatasetContext("news.csv").get_dictionary()
 
-	
-	datasetContext = DatasetContext(sources)
-
-	''' THE FOLLOWING WAS USED FOR TESTING
+	''' THE FOLLOWING WAS USED FOR TESTING'''
 	sampleDomain = ".newstarget.com"
-	sourceNode = sources[sampleDomain]
+	sourceNode = dataDictionary.get(sampleDomain)
 	print("name", sourceNode.get_name())
 	print("r-value", sourceNode.get_reliability_value())
-	print("bias", sourceNode.get_bias_value())'''
+	print("bias", sourceNode.get_bias_value())
