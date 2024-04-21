@@ -22,7 +22,7 @@ def input():
     print(verifact['verifact'])
     
     driver = Driver(verifact['verifact'])
-    data_table, summaries = driver.go(mode=Modes.RUNNING)
+    data_table, summaries = driver.go(mode=Modes.TESTING)
 
     # example json data
     head_articles = []
@@ -36,7 +36,7 @@ def input():
             "relevance": data_table['relevance'][i],
             "summary": summaries[i],
         },)
-    if (len(data_table.index) > 2):
+    if (len(data_table) > 2):
         for i in range(2, len(data_table)):
             articles.append({
                         "id": i,
@@ -49,8 +49,8 @@ def input():
     return jsonify( 
         {
             "summary": {
-                "average": 25,
-                "reliability": 70,
+                "average": sum([int(i) for i in data_table['bias']]) / len(data_table['bias']),
+                "reliability": max(data_table['reliability']),
                 "headArticles": head_articles,
                 "articles": articles,
             }

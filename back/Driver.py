@@ -68,8 +68,10 @@ class Driver:
                 data['relevance'].append(Driver.scale_relevance(relevance))
 
         data_table = pd.DataFrame(data)
-        
-        data_table = data_table.sort_values(by='reliability')
+        print(data_table)
+        data_table = data_table.sort_values(by='reliability', ascending=False)
+        data_table.reset_index(drop=True, inplace=True)
+        print(data_table)
         
         gpt = GPTInterface()
         summaries = []
@@ -91,6 +93,7 @@ class Driver:
             summaries.append(gpt.get_summary(article))
         #Driver.save_article(article, "data/article2.pkl")
         
+        print(data_table['title'])
         return data_table, summaries
     
     def save_article(article, filename):
@@ -109,7 +112,7 @@ class Driver:
         return str(math.floor(float(bias) / 40 * 100))
     
     def scale_relevance(relevance):
-        return str(math.floor(float(relevance) / 0.1 * 100))
+        return str(math.floor(float(relevance) / 1 * 100))
     
     def scale_reliability(reliability):
         return str(math.floor(float(reliability) / 50 * 100))
