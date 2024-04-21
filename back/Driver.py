@@ -28,22 +28,27 @@ class Driver:
         return titles, desc, links, raw_links
 
     def go(self, mode=Modes.TESTING):
-
+        if (mode == Modes.TESTING):
+            return self.__goTest()
+        else:
+            return self.__goRun()
+        
+    def __goTest(self):
+        return Driver.__load("data/testrun.pkl")
+    
+    def __goRun(self):
         data_dictionary = DatasetContext("news.csv").get_dictionary()
         news_urls = data_dictionary.keys()
 
-        if (mode == Modes.TESTING):
-            titles, desc, links, raw_links = Driver.load_willdumb()
-        else:
-            searcher = SearchEngine()
-            searcher.make_query(self.__query)
+        searcher = SearchEngine()
+        searcher.make_query(self.__query)
 
-            titles = searcher.get_titles()
-            desc = searcher.get_descriptions()
-            links = searcher.get_links()
-            raw_links = searcher.get_raw_links()
-            
-            similarity = Similarity(self.__query)
+        titles = searcher.get_titles()
+        desc = searcher.get_descriptions()
+        links = searcher.get_links()
+        raw_links = searcher.get_raw_links()
+        
+        similarity = Similarity(self.__query)
         
         data = {'title': [], 'desc': [], 'links': [], 'raw_links': [], 'bias': [], 'reliability': [], 'relevance': []}
 
@@ -60,11 +65,8 @@ class Driver:
                 data['bias'].append(Driver.scale_bias(node.get_bias_value()))
                 data['reliability'].append(Driver.scale_reliability(node.get_reliability_value()))
                 
-                # Determining similarity
-                if (mode == Modes.TESTING):
-                    relevance = '0.01'
-                else:
-                    relevance = similarity.get_rating(titles[i])
+                # Determining similarity    
+                relevance = similarity.get_rating(titles[i])
                 data['relevance'].append(Driver.scale_relevance(relevance))
 
         data_table = pd.DataFrame(data)
@@ -75,33 +77,25 @@ class Driver:
         
         gpt = GPTInterface()
         summaries = []
+
+        reader = URLToArticle(raw_links[0])
+        article = reader.read()
+        summaries.append(gpt.get_summary(article))
         
-        if (mode == Modes.TESTING):
-            article = Driver.load_article("data/article1.pkl")
-            summaries.append("summary1")
-        else:
-            reader = URLToArticle(raw_links[0])
-            article = reader.read()
-            summaries.append(gpt.get_summary(article))
-        #Driver.save_article(article, "data/article1.pkl")
-        if (mode == Modes.TESTING):
-            article = Driver.load_article("data/article2.pkl")
-            summaries.append("summary2")
-        else:
-            reader = URLToArticle(raw_links[0])
-            article = reader.read()
-            summaries.append(gpt.get_summary(article))
-        #Driver.save_article(article, "data/article2.pkl")
+        reader = URLToArticle(raw_links[1])
+        article = reader.read()
+        summaries.append(gpt.get_summary(article))
         
         print(data_table['title'])
+        Driver.__save(data_table, summaries, "data/testrun.pkl")
         return data_table, summaries
     
-    def save_article(article, filename):
+    def __save(data_table, summaries, filename):
         with open(filename, 'wb') as file:
-            pickle.dump(article, file)
+            pickle.dump([data_table, summaries], file)
         file.close()
         
-    def load_article(filename):
+    def __load(filename):
         result = ""
         with open(filename, "rb") as file:
             result = pickle.load(file)
