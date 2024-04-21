@@ -1,4 +1,7 @@
-from search_engine_parser import BingSearch
+# from search_engine_parser import BingSearch as searchEngineType
+from serpapi import GoogleSearch as serpEngine
+from APIKeys import APIKeys
+import pickle
 
 class SearchEngine:
 
@@ -7,8 +10,26 @@ class SearchEngine:
         self.__query = "NullQuery"
         self.__links = []
         self.__desc = []
+        APIKeys.set_var("SERP_API_KEY")
 
-    def makeQuery(self, query):
+    def _clean_up_link(self, link):
+        """ Helper function to clean up the link 
+
+        Parameters:
+        -----------------
+         - link {string}: 
+
+        Return:
+        -----------------
+         - clean_link {string}: Link stripped to .name.domain 
+        """
+
+        main_link = link.split("/")[2]
+        if len(main_link.split('.')) > 2:
+            main_link = main_link.split('.', 1)[1]
+        return main_link
+
+    def make_query(self, query):
         """ Makes given query to Google Search result. Stores results in class lists.
         Query results are saved as titles, descriptions, and links
 
@@ -21,19 +42,34 @@ class SearchEngine:
         self.__links = []
         self.__desc = []
 
-        search_args = (query, 1)
-        gsearch = BingSearch()
-        gresults_page_1 = gsearch.search(*search_args)
-        search_args = (query, 2)
-        gresults_page_2 = gsearch.search(*search_args)
+        search_params = {
+            "api_key": APIKeys.get_key("SERP_API_KEY"),
+            "engine": "google",
+            "q": query,
+            "google_domain": "google.com",
+            "gl": "us",
+            "hl": "en",
+            "tbm": "nws",
+            "num": "20"
+            }
+        
+        search = serpEngine(search_params)
+        results = search.get_dict()
 
-        # Store results in easily accessible format
-        self.__titles.extend(gresults_page_1['titles'])
-        self.__titles.extend(gresults_page_2['titles'])
-        self.__links.extend(gresults_page_1['links'])
-        self.__links.extend(gresults_page_2['links'])
-        self.__desc.extend(gresults_page_1['descriptions'])
-        self.__desc.extend(gresults_page_2['descriptions'])
+        for news_result in results['news_results']:
+            self.__titles.append(news_result['title'])
+            self.__desc.append(news_result['snippet'])
+            self.__links.append("." + self._clean_up_link(news_result['link']))
+
+        self.__serialize_results()
+
+        return (self.__titles, self.__desc, self.__links)
+    
+    def __serialize_results(self):
+        data = (self.__titles, self.__desc, self.__links)
+        pickle_name = '_'.join(self.__query.split(" ")) + ".pkl"
+        with open(pickle_name, 'wb') as f:
+            pickle.dump(data, f)
     
     def prune_results(self, relevance_ratings, relevance_threshold):
         """ Removes specific stored results from last query based on relevance
@@ -159,6 +195,8 @@ if __name__ == "__main__":
     # Just some simple test code to show use of functions
     se = SearchEngine()
 
+    print(se._clean_up_link("https://stackoverflow.com/questions/39875629/how-to-use-strip-in-map-function"))
+
     searching = True
     while searching:
         query = input("What do you want to search? ")
@@ -166,7 +204,7 @@ if __name__ == "__main__":
         if query == "":
             exit()
 
-        se.makeQuery(query)
+        se.make_query(query)
         print()
 
         for i in range(se.get_num_results()):
