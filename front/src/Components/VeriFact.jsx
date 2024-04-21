@@ -78,7 +78,7 @@ export default function VeriFact() {
         </div>
         <div className="head-article-list">
           {summary.headArticles.map(
-            ({ id, title, reliability, bias, relevance, summary, url }) => (
+            ({ id, title, reliability, bias, relevance, summary, url, source }) => (
               <div key={id} className="head-article">
                 <div className="head-article-header">
                   <div className="article-title"><a href={url} target="_blank">"{title}"</a></div>
@@ -88,6 +88,7 @@ export default function VeriFact() {
                   <div className="head-bias">Bias: {bias}%</div>
                   <div className="head-relevance">Relevance: {relevance}%</div>
                 </div>
+                <div className="news-source">Source: {source}</div>
                 <div className="head-summary">{summary}</div>
               </div>
             )
@@ -95,15 +96,16 @@ export default function VeriFact() {
         </div>
         <div className="article-list">
           {summary.articles.map(
-            ({ id, title, reliability, bias, relevance, url }) => (
-              <div key={id} className="article">
+            ({ id, title, reliability, bias, relevance, url, source }) => (
+              <><div key={id} className="article">
                 <div className="article-title"><a href={url} target="_blank">"{title}"</a></div>
                 <div className="article-reliability">
                   Reliability: {reliability}%
                 </div>
                 <div className="article-bias">Bias: {bias}%</div>
                 <div className="head-relevance">Relevance: {relevance}%</div>
-              </div>
+                
+              </div><div className="news-source">Source: {source}</div></>
             )
           )}
         </div>
@@ -115,7 +117,6 @@ export default function VeriFact() {
     <div className="form-container">
       <div id="form">
         <img src="/public/BANNER_NO_BACKY.png"></img>
-        <h2>Input Verifact:</h2>
         <div className="input-box">
           <input
             id="verifact"
@@ -123,7 +124,7 @@ export default function VeriFact() {
             onChange={(e) => {
               setForm({ [e.target.id]: e.target.value });
             }}
-            placeholder="Verifact"
+            placeholder="Fact to verify"
           ></input>
         </div>
         <button className="submit-button" onClick={sendForm}>

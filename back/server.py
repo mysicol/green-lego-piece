@@ -36,6 +36,7 @@ def input():
             "relevance": data_table['relevance'][i],
             "summary": summaries[i],
             "url": data_table['raw_links'][i],
+            "source": data_table['sources'][i],
         },)
     if (len(data_table) > 2):
         for i in range(2, len(data_table)):
@@ -46,6 +47,7 @@ def input():
                         "bias": data_table['bias'][i],
                         "relevance": data_table['relevance'][i],
                         "url": data_table['raw_links'][i],
+                        "source": data_table['sources'][i],
                     },)
     print(articles)
     return jsonify( 

@@ -50,7 +50,7 @@ class Driver:
         
         similarity = Similarity(self.__query)
         
-        data = {'title': [], 'desc': [], 'links': [], 'raw_links': [], 'bias': [], 'reliability': [], 'relevance': []}
+        data = {'title': [], 'desc': [], 'links': [], 'raw_links': [], 'bias': [], 'reliability': [], 'relevance': [], 'sources': []}
 
         for i in range(len(links)):
             if links[i] in news_urls:
@@ -64,6 +64,7 @@ class Driver:
                 node = data_dictionary.get(links[i])
                 data['bias'].append(Driver.scale_bias(node.get_bias_value()))
                 data['reliability'].append(Driver.scale_reliability(node.get_reliability_value()))
+                data['sources'].append(node.get_name())
                 
                 # Determining similarity    
                 relevance = similarity.get_rating(titles[i])
