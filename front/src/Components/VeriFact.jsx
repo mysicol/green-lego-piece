@@ -40,7 +40,8 @@ export default function VeriFact() {
   let summaryPage = (
     <div className="summary-container">
       <div id="summary">
-        <h1 className="header">Credibility Report</h1>
+        <h1 className="header">VeriFact</h1>
+        <h2>Trusted Credibility Report</h2>
         <div id="bias-stat">
           <progress
             id={summary.average < 0 ? "democrat" : "republican"}
@@ -113,7 +114,8 @@ export default function VeriFact() {
   let formPage = (
     <div className="form-container">
       <div id="form">
-        <h1>Input Verifact:</h1>
+        <img src="/public/BANNER_NO_BACKY.png"></img>
+        <h2>Input Verifact:</h2>
         <div className="input-box">
           <input
             id="verifact"
