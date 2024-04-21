@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "./VeriFact.css";
 
 export default function VeriFact() {
   let [form, setForm] = useState({ verifact: "" });
@@ -13,6 +14,7 @@ export default function VeriFact() {
         title: "",
         reliability: 0,
         bias: 0,
+        relevance: 0,
         summary: "",
       },
     ],
@@ -22,6 +24,7 @@ export default function VeriFact() {
         title: "",
         reliability: 0,
         bias: 0,
+        relevance: 0,
       },
     ],
   }); // default data
@@ -37,30 +40,72 @@ export default function VeriFact() {
   let summaryPage = (
     <div className="summary-container">
       <div id="summary">
-        <h1>Bias Bar: {summary.average}</h1>
-        <h1>Reliability Bar: {summary.reliability}</h1>
+        <h1 className="header">Credibility Report</h1>
+        <div id="bias-stat">
+          <progress
+            id={summary.average < 0 ? "democrat" : "republican"}
+            className="bias-bar"
+            value={Math.abs(summary.average)}
+            max="84"
+            style={{
+              transform: summary.average < 0 ? "scale(-1, 1)" : "scale(1, 1)",
+            }}
+          >
+            {" "}
+            {summary.average}%{" "}
+          </progress>
+          <div className="bar-labels">
+            <div className="left">L</div>
+            <div className="right">R</div>
+          </div>
+          <div className="bar-text">Bias</div>
+        </div>
+        <div id="reliability-stat">
+          <progress
+            className="reliability-bar"
+            value={summary.reliability}
+            max="100"
+          >
+            {" "}
+            {summary.reliability}%{" "}
+          </progress>
+          <div className="bar-labels">
+            <div className="left">0</div>
+            <div className="right">100</div>
+          </div>
+          <div className="bar-text">Reliability</div>
+        </div>
         <div className="head-article-list">
           {summary.headArticles.map(
-            ({ id, title, reliability, bias, summary }) => (
+            ({ id, title, reliability, bias, relevance, summary }) => (
               <div key={id} className="head-article">
-                <div className="head-title">{title}</div>
-                <div className="head-reliability">{reliability}</div>
-                <div className="head-bias">{bias}</div>
+                <div className="head-article-header">
+                  <div className="article-title">"{title}"</div>
+                  <div className="head-reliability">
+                    Reliability: {reliability}%
+                  </div>
+                  <div className="head-bias">Bias: {bias}</div>
+                  <div className="head-relevance">Relevance: {relevance}%</div>
+                </div>
                 <div className="head-summary">{summary}</div>
               </div>
             )
           )}
         </div>
         <div className="article-list">
-          {summary.articles.map(({ id, title, reliability, bias }) => (
-            <div key={id} className="article">
-              <div className="article-title">{title}</div>
-              <div className="article-reliability">{reliability}</div>
-              <div className="article-bias">{bias}</div>
-            </div>
-          ))}
+          {summary.articles.map(
+            ({ id, title, reliability, bias, relevance }) => (
+              <div key={id} className="article">
+                <div className="article-title">"{title}"</div>
+                <div className="article-reliability">
+                  Reliability: {reliability}%
+                </div>
+                <div className="article-bias">Bias: {bias}</div>
+                <div className="head-relevance">Relevance: {relevance}%</div>
+              </div>
+            )
+          )}
         </div>
-        <div className="article-list"></div>
       </div>
     </div>
   );
