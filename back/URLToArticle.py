@@ -4,13 +4,11 @@ from bs4 import BeautifulSoup
 class URLToArticle:
     def __init__(self, website_link):
         self._link = website_link
-        self._text = None
     
     def read(self):
-        self._text = requests.get(self._link)
+        raw_page = requests.get(self._link)
     
-    def extract_content(self):
-        soup = BeautifulSoup(self._text.text)
+        soup = BeautifulSoup(raw_page.text)
 
         soup_pretty = BeautifulSoup(soup.prettify())
 
