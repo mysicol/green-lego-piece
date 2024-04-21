@@ -1,6 +1,7 @@
 # from search_engine_parser import BingSearch as searchEngineType
 from serpapi import GoogleSearch as serpEngine
 from APIKeys import APIKeys
+import pickle
 
 class SearchEngine:
 
@@ -52,22 +53,23 @@ class SearchEngine:
             "num": "20"
             }
         
-        print("Making request : ", query)
-
         search = serpEngine(search_params)
         results = search.get_dict()
 
         for news_result in results['news_results']:
-            print(news_result['title'])
             self.__titles.append(news_result['title'])
-            print(news_result['snippet'])
             self.__desc.append(news_result['snippet'])
-            print(news_result['link'])
-            print(self._clean_up_link(news_result['link']))
-            print()
-            self.__links.append(self._clean_up_link(news_result['link']))
+            self.__links.append("." + self._clean_up_link(news_result['link']))
 
+        self.__serialize_results()
 
+        return (self.__titles, self.__desc, self.__links)
+    
+    def __serialize_results(self):
+        data = (self.__titles, self.__desc, self.__links)
+        pickle_name = '_'.join(self.__query.split(" ")) + ".pkl"
+        with open(pickle_name, 'wb') as f:
+            pickle.dump(data, f)
     
     def prune_results(self, relevance_ratings, relevance_threshold):
         """ Removes specific stored results from last query based on relevance
