@@ -1,4 +1,4 @@
-from search_engine_parser import BingSearch
+from search_engine_parser import BingSearch as searchEngineType
 
 class SearchEngine:
 
@@ -8,7 +8,21 @@ class SearchEngine:
         self.__links = []
         self.__desc = []
 
-    def makeQuery(self, query):
+    def _clean_up_link(self, link):
+        """ Helper function to clean up the link 
+
+        Parameters:
+        -----------------
+         - link {string}: 
+
+        Return:
+        -----------------
+         - clean_link {string}: Link stripped to .name.domain 
+        """
+
+        return "." + link.split("/")[2]
+
+    def make_query(self, query):
         """ Makes given query to Google Search result. Stores results in class lists.
         Query results are saved as titles, descriptions, and links
 
@@ -22,7 +36,7 @@ class SearchEngine:
         self.__desc = []
 
         search_args = (query, 1)
-        gsearch = BingSearch()
+        gsearch = searchEngineType()
         gresults_page_1 = gsearch.search(*search_args)
         search_args = (query, 2)
         gresults_page_2 = gsearch.search(*search_args)
@@ -30,8 +44,8 @@ class SearchEngine:
         # Store results in easily accessible format
         self.__titles.extend(gresults_page_1['titles'])
         self.__titles.extend(gresults_page_2['titles'])
-        self.__links.extend(gresults_page_1['links'])
-        self.__links.extend(gresults_page_2['links'])
+        self.__links.extend(list(map(self.__clean_up_link, gresults_page_1['links'])))
+        self.__links.extend(list(map(self.__clean_up_link, gresults_page_2['links'])))
         self.__desc.extend(gresults_page_1['descriptions'])
         self.__desc.extend(gresults_page_2['descriptions'])
     
@@ -159,6 +173,8 @@ if __name__ == "__main__":
     # Just some simple test code to show use of functions
     se = SearchEngine()
 
+    print(se._clean_up_link("https://stackoverflow.com/questions/39875629/how-to-use-strip-in-map-function"))
+
     searching = True
     while searching:
         query = input("What do you want to search? ")
@@ -166,7 +182,7 @@ if __name__ == "__main__":
         if query == "":
             exit()
 
-        se.makeQuery(query)
+        se.make_query(query)
         print()
 
         for i in range(se.get_num_results()):
