@@ -30,7 +30,7 @@ def input():
     for i in range(2):
         head_articles.append({
             "id": i,
-            "title": data_table['title'][i] ,
+            "title": data_table['title'][i],
             "reliability": data_table['reliability'][i],
             "bias": data_table['bias'][i],
             "relevance": data_table['relevance'][i],

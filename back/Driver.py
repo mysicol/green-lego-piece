@@ -6,6 +6,7 @@ from URLToArticle import URLToArticle
 from GPTInterface import GPTInterface
 import pandas as pd
 import pickle
+import math
 from enum import Enum
 
 class Modes(Enum):
@@ -55,14 +56,15 @@ class Driver:
                 
                 # Adding news source information
                 node = data_dictionary.get(links[i])
-                data['bias'].append(node.get_bias_value())
-                data['reliability'].append(node.get_reliability_value())
+                data['bias'].append(Driver.scale_bias(node.get_bias_value()))
+                data['reliability'].append(Driver.scale_reliability(node.get_reliability_value()))
                 
                 # Determining similarity
                 if (mode == Modes.TESTING):
-                    data['relevance'].append('1')
+                    relevance = '0.01'
                 else:
-                    data['relevance'].append(similarity.get_rating(titles[i]))
+                    relevance = similarity.get_rating(titles[i])
+                data['relevance'].append(Driver.scale_relevance(relevance))
 
         data_table = pd.DataFrame(data)
         
@@ -101,3 +103,12 @@ class Driver:
             result = pickle.load(file)
         file.close()
         return result
+    
+    def scale_bias(bias):
+        return str(math.floor(float(bias) / 40 * 100))
+    
+    def scale_relevance(relevance):
+        return str(math.floor(float(relevance) / 0.1 * 100))
+    
+    def scale_reliability(reliability):
+        return str(math.floor(float(reliability) / 50 * 100))

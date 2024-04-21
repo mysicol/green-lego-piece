@@ -84,7 +84,7 @@ export default function VeriFact() {
                   <div className="head-reliability">
                     Reliability: {reliability}%
                   </div>
-                  <div className="head-bias">Bias: {bias}</div>
+                  <div className="head-bias">Bias: {bias}%</div>
                   <div className="head-relevance">Relevance: {relevance}%</div>
                 </div>
                 <div className="head-summary">{summary}</div>
@@ -100,7 +100,7 @@ export default function VeriFact() {
                 <div className="article-reliability">
                   Reliability: {reliability}%
                 </div>
-                <div className="article-bias">Bias: {bias}</div>
+                <div className="article-bias">Bias: {bias}%</div>
                 <div className="head-relevance">Relevance: {relevance}%</div>
               </div>
             )
