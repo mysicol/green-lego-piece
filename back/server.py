@@ -30,7 +30,7 @@ def input():
     for i in range(2):
         head_articles.append({
             "id": i,
-            "title": data_table['title'][i],
+            "title": shorten_title(data_table['title'][i]),
             "reliability": data_table['reliability'][i],
             "bias": data_table['bias'][i],
             "relevance": data_table['relevance'][i],
@@ -40,7 +40,7 @@ def input():
         for i in range(2, len(data_table)):
             articles.append({
                         "id": i,
-                        "title": data_table['title'][i] ,
+                        "title": shorten_title(data_table['title'][i]),
                         "reliability": data_table['reliability'][i],
                         "bias": data_table['bias'][i],
                         "relevance": data_table['relevance'][i],
@@ -56,6 +56,13 @@ def input():
             }
         }
     )
+
+
+def shorten_title(title):
+    if len(title) > 60:
+        return title[:60] + "..."
+    else:
+        return title
 
 if __name__ == "__main__":
     # debug = True so we can see live updates while developing
