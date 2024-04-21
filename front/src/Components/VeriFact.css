@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
 
 * {
   margin: 0;
@@ -7,7 +7,7 @@
 }
 
 .summary-container {
-  font-family: "Poppins", sans-serif;
+  font-family: "Sarabun", sans-serif;
   background-color: pink;
   display: flex;
   justify-content: center;
@@ -21,6 +21,14 @@
   background-color: lightgreen;
   justify-content: center;
   text-align: center;
+}
+
+#summary .header {
+  font-weight: 900;
+}
+
+#bias-stat {
+  margin: 10px 20px;
 }
 
 .bias-bar {
@@ -39,7 +47,7 @@
 }
 
 .bias-bar::-webkit-progress-value {
-  border-radius: 10px;
+  border-radius: 0px 10px 10px 0px;
 }
 
 #bias-stat #republican::-webkit-progress-value {
@@ -48,6 +56,10 @@
 
 #bias-stat #democrat::-webkit-progress-value {
   background-color: blue;
+}
+
+#reliability-stat {
+  margin: 10px 20px;
 }
 
 .reliability-bar {
@@ -69,9 +81,15 @@
   border-radius: 10px;
 }
 
+.bar-text {
+  position: relative;
+  bottom: 20px;
+}
+
 .bar-labels {
   display: flex;
   justify-content: space-between;
+  position: relative;
 }
 
 .head-article-list {

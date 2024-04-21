@@ -40,7 +40,7 @@ export default function VeriFact() {
   let summaryPage = (
     <div className="summary-container">
       <div id="summary">
-        <h1>Summary Stats</h1>
+        <h1 className="header">Credibility Report</h1>
         <div id="bias-stat">
           <progress
             id={summary.average < 0 ? "democrat" : "republican"}
@@ -55,10 +55,10 @@ export default function VeriFact() {
             {summary.average}%{" "}
           </progress>
           <div className="bar-labels">
-            <div>L</div>
-            <div>R</div>
+            <div className="left">L</div>
+            <div className="right">R</div>
           </div>
-          <div className="bias-text">Bias</div>
+          <div className="bar-text">Bias</div>
         </div>
         <div id="reliability-stat">
           <progress
@@ -70,10 +70,10 @@ export default function VeriFact() {
             {summary.reliability}%{" "}
           </progress>
           <div className="bar-labels">
-            <div>0</div>
-            <div>100</div>
+            <div className="left">0</div>
+            <div className="right">100</div>
           </div>
-          <div className="reliability-text">Reliability</div>
+          <div className="bar-text">Reliability</div>
         </div>
         <div className="head-article-list">
           {summary.headArticles.map(
