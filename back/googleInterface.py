@@ -1,4 +1,6 @@
-from search_engine_parser import BingSearch as searchEngineType
+# from search_engine_parser import BingSearch as searchEngineType
+from serpapi import GoogleSearch as serpEngine
+from APIKeys import APIKeys
 
 class SearchEngine:
 
@@ -7,6 +9,7 @@ class SearchEngine:
         self.__query = "NullQuery"
         self.__links = []
         self.__desc = []
+        APIKeys.set_var("SERP_API_KEY")
 
     def _clean_up_link(self, link):
         """ Helper function to clean up the link 
@@ -20,7 +23,10 @@ class SearchEngine:
          - clean_link {string}: Link stripped to .name.domain 
         """
 
-        return "." + link.split("/")[2]
+        main_link = link.split("/")[2]
+        if len(main_link.split('.')) > 2:
+            main_link = main_link.split('.', 1)[1]
+        return main_link
 
     def make_query(self, query):
         """ Makes given query to Google Search result. Stores results in class lists.
@@ -35,19 +41,33 @@ class SearchEngine:
         self.__links = []
         self.__desc = []
 
-        search_args = (query, 1)
-        gsearch = searchEngineType()
-        gresults_page_1 = gsearch.search(*search_args)
-        search_args = (query, 2)
-        gresults_page_2 = gsearch.search(*search_args)
+        search_params = {
+            "api_key": APIKeys.get_key("SERP_API_KEY"),
+            "engine": "google",
+            "q": query,
+            "google_domain": "google.com",
+            "gl": "us",
+            "hl": "en",
+            "tbm": "nws",
+            "num": "20"
+            }
+        
+        print("Making request : ", query)
 
-        # Store results in easily accessible format
-        self.__titles.extend(gresults_page_1['titles'])
-        self.__titles.extend(gresults_page_2['titles'])
-        self.__links.extend(list(map(self.__clean_up_link, gresults_page_1['links'])))
-        self.__links.extend(list(map(self.__clean_up_link, gresults_page_2['links'])))
-        self.__desc.extend(gresults_page_1['descriptions'])
-        self.__desc.extend(gresults_page_2['descriptions'])
+        search = serpEngine(search_params)
+        results = search.get_dict()
+
+        for news_result in results['news_results']:
+            print(news_result['title'])
+            self.__titles.append(news_result['title'])
+            print(news_result['snippet'])
+            self.__desc.append(news_result['snippet'])
+            print(news_result['link'])
+            print(self._clean_up_link(news_result['link']))
+            print()
+            self.__links.append(self._clean_up_link(news_result['link']))
+
+
     
     def prune_results(self, relevance_ratings, relevance_threshold):
         """ Removes specific stored results from last query based on relevance
