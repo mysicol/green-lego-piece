@@ -31,13 +31,6 @@ class Driver:
         data_dictionary = DatasetContext("news.csv").get_dictionary()
         news_urls = data_dictionary.keys()
 
-        # searcher = SearchEngine()
-        # searcher.makeQuery()
-
-        # titles = searcher.get_titles()
-        # descriptions = searcher.get_description()
-        # links = searcher.get_links()
-
         if (mode == Modes.TESTING):
             titles, desc, links, raw_links = Driver.load_willdumb()
         else:
@@ -80,18 +73,20 @@ class Driver:
         
         if (mode == Modes.TESTING):
             article = Driver.load_article("data/article1.pkl")
+            summaries.append("summary1")
         else:
             reader = URLToArticle(raw_links[0])
             article = reader.read()
+            summaries.append(gpt.get_summary(article))
         #Driver.save_article(article, "data/article1.pkl")
-        summaries.append(gpt.get_summary(article))
         if (mode == Modes.TESTING):
             article = Driver.load_article("data/article2.pkl")
+            summaries.append("summary2")
         else:
             reader = URLToArticle(raw_links[0])
             article = reader.read()
+            summaries.append(gpt.get_summary(article))
         #Driver.save_article(article, "data/article2.pkl")
-        summaries.append(gpt.get_summary(article))
         
         return data_table, summaries
     
@@ -106,38 +101,3 @@ class Driver:
             result = pickle.load(file)
         file.close()
         return result
-
-    def create_json(data_table, summaries):
-        articles = []
-        for i in range(len(data_table)):
-            articles.append({
-                        "id": i,
-                        "title": data_table['title'][i] ,
-                        "reliability": data_table['reliability'][i],
-                        "bias": data_table['bias'][i],
-                    },)
-        return jsonify( 
-        {
-            "summary": {
-                "average": 50,
-                "reliability": 70,
-                "headArticles": [
-                    {
-                        "id": 0,
-                        "title": "Title",
-                        "reliability": 60,
-                        "bias": 50,
-                        "summary": "A summary",
-                    },
-                    {
-                        "id": 1,
-                        "title": "22222",
-                        "reliability": 2,
-                        "bias": 20,
-                        "summary": "2sum2",
-                    },
-                ],
-                "articles": articles
-            }
-        }
-        )
