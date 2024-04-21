@@ -36,11 +36,12 @@ class Driver:
             titles, desc, links, raw_links = Driver.load_willdumb()
         else:
             searcher = SearchEngine()
-            searcher.makeQuery()
+            searcher.make_query(self.__query)
 
             titles = searcher.get_titles()
-            desc = searcher.get_description()
+            desc = searcher.get_descriptions()
             links = searcher.get_links()
+            raw_links = searcher.get_raw_links()
             
             similarity = Similarity(self.__query)
         
@@ -53,7 +54,7 @@ class Driver:
                 data['desc'].append(desc[i])
                 data['links'].append(links[i])
                 data['raw_links'].append(raw_links[i])
-                
+
                 # Adding news source information
                 node = data_dictionary.get(links[i])
                 data['bias'].append(Driver.scale_bias(node.get_bias_value()))

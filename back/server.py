@@ -19,10 +19,10 @@ def example():
 @app.route("/api/input", methods=['POST'])
 def input():
     verifact = request.json
-    print(verifact)
+    print(verifact['verifact'])
     
-    driver = Driver(verifact)
-    data_table, summaries = driver.go(mode=Modes.TESTING)
+    driver = Driver(verifact['verifact'])
+    data_table, summaries = driver.go(mode=Modes.RUNNING)
 
     # example json data
     head_articles = []
