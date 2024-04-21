@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* margin and padding are included in elements' specified width and height */
+}
+
+.summary-container {
+  font-family: "Poppins", sans-serif;
+  background-color: pink;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+#summary {
+  display: flex;
+  flex-direction: column;
+  background-color: lightgreen;
+  justify-content: center;
+  text-align: center;
+}
+
+.bias-bar {
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+  appearance: none;
+  width: 750px;
+  height: 75px;
+}
+
+.bias-bar::-webkit-progress-bar {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+  padding-left: 50%;
+}
+
+.bias-bar::-webkit-progress-value {
+  border-radius: 10px;
+}
+
+#bias-stat #republican::-webkit-progress-value {
+  background-color: red;
+}
+
+#bias-stat #democrat::-webkit-progress-value {
+  background-color: blue;
+}
+
+.reliability-bar {
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+  appearance: none;
+  width: 750px;
+  height: 75px;
+}
+
+.reliability-bar::-webkit-progress-bar {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+.reliability-bar::-webkit-progress-value {
+  background-color: blue;
+  border-radius: 10px;
+}
+
+.bar-labels {
+  display: flex;
+  justify-content: space-between;
+}
+
+.head-article-list {
+  display: flex;
+  flex-direction: column;
+  background-color: lightblue;
+}
+
+.head-article {
+  background-color: lightseagreen;
+  margin: 10px;
+}
+
+.head-article-header {
+  display: flex;
+  justify-content: space-around;
+}
+
+.article-list {
+  display: flex;
+  flex-direction: column;
+  background-color: lightcoral;
+}
+
+.article {
+  display: flex;
+  justify-content: space-around;
+  background-color: lightgoldenrodyellow;
+  margin: 10px;
+}

@@ -27,22 +27,24 @@ def input():
     return jsonify( 
         {
             "summary": {
-                "average": 50,
+                "average": 25,
                 "reliability": 70,
                 "headArticles": [
                     {
                         "id": 0,
-                        "title": "Title",
-                        "reliability": 60,
-                        "bias": 50,
-                        "summary": "A summary",
+                        "title": "Are cats real?",
+                        "reliability": 80,
+                        "bias": 12,
+                        "relevance": 70,
+                        "summary": "This is a really great summary about whether or not cats are real. Turns out, they are fake. Just like birds.",
                     },
                     {
                         "id": 1,
-                        "title": "22222",
+                        "title": "Old people, true or false?",
                         "reliability": 2,
-                        "bias": 20,
-                        "summary": "2sum2",
+                        "bias": 30,
+                        "relevance": 20,
+                        "summary": "This is a semi-reliable article. We may never know if old people are...",
                     },
                 ],
                 "articles": [
@@ -51,6 +53,7 @@ def input():
                         "title": "Another Title",
                         "reliability": 30,
                         "bias": 20,
+                        "relevance": 12,
                     },
                 ],
             }
