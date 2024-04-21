@@ -1,4 +1,3 @@
-# from search_engine_parser import BingSearch as searchEngineType
 from serpapi import GoogleSearch as serpEngine
 from APIKeys import APIKeys
 import pickle
@@ -10,6 +9,7 @@ class SearchEngine:
         self.__query = "NullQuery"
         self.__links = []
         self.__desc = []
+        self.__raw_links = []
         APIKeys.set_var("SERP_API_KEY")
 
     def _clean_up_link(self, link):
@@ -39,6 +39,7 @@ class SearchEngine:
         """
         self.__query = query
         self.__titles = []
+        self.__raw_links = []
         self.__links = []
         self.__desc = []
 
@@ -60,13 +61,14 @@ class SearchEngine:
             self.__titles.append(news_result['title'])
             self.__desc.append(news_result['snippet'])
             self.__links.append("." + self._clean_up_link(news_result['link']))
+            self.__raw_links.append(news_result['link'])
 
         self.__serialize_results()
 
-        return (self.__titles, self.__desc, self.__links)
+        return (self.__titles, self.__desc, self.__links, self.__raw_links)
     
     def __serialize_results(self):
-        data = (self.__titles, self.__desc, self.__links)
+        data = (self.__titles, self.__desc, self.__links, self.__raw_links)
         pickle_name = '_'.join(self.__query.split(" ")) + ".pkl"
         with open(pickle_name, 'wb') as f:
             pickle.dump(data, f)
@@ -170,6 +172,31 @@ class SearchEngine:
         else:
             return None
     
+    def get_raw_link(self, index):
+        """Return raw link of result from last query with given index as a string
+
+        Parameters:
+        -----------------
+        - index {int} : Index of raw link to return
+
+        Returns:
+        -----------------
+        - self.__raw_links[index] {string} : Result link at index
+        """
+        if index < len(self.__raw_links):
+            return self.__raw_links[index]
+        else:
+            return None
+        
+    def get_raw_links(self):
+        """Returns list of links as strings based on last query
+        
+        Returns:
+        -----------------
+        - self.__raw_links {list : string} : List of result links as strings
+        """
+        return self.__raw_links
+    
     def get_last_query(self):
         """Return last query as a string
 
@@ -205,7 +232,7 @@ if __name__ == "__main__":
             exit()
 
         se.make_query(query)
-        print()
+        ()
 
         for i in range(se.get_num_results()):
             print("Result #", (i+1))

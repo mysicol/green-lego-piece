@@ -3,10 +3,13 @@ from bs4 import BeautifulSoup
 
 class URLToArticle:
     def __init__(self, website_link):
-        self._link = website_link
+        self.__link = website_link
+        print(website_link)
     
     def read(self):
-        raw_page = requests.get(self._link)
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.0.0 Safari/537.36'}
+
+        raw_page = requests.get(self.__link, headers=headers)
     
         soup = BeautifulSoup(raw_page.text)
 

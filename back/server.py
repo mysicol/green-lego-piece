@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from Driver import Driver, Modes
 
 app = Flask(__name__)
 cors = CORS(app, origins="*")
@@ -18,44 +19,40 @@ def example():
 @app.route("/api/input", methods=['POST'])
 def input():
     verifact = request.json
-
-    print(verifact) # TODO remove, structure of verifact is: { verifact: "string" }
-
-    # TODO turn verifact into a search query, make the search, and then return json below 
+    print(verifact)
+    
+    driver = Driver(verifact)
+    data_table, summaries = driver.go(mode=Modes.TESTING)
 
     # example json data
+    head_articles = []
+    articles = []
+    for i in range(2):
+        head_articles.append({
+            "id": i,
+            "title": data_table['title'][i] ,
+            "reliability": data_table['reliability'][i],
+            "bias": data_table['bias'][i],
+            "relevance": data_table['relevance'][i],
+            "summary": summaries[i],
+        },)
+    if (len(data_table.index) > 2):
+        for i in range(2, len(data_table)):
+            articles.append({
+                        "id": i,
+                        "title": data_table['title'][i] ,
+                        "reliability": data_table['reliability'][i],
+                        "bias": data_table['bias'][i],
+                        "relevance": data_table['relevance'][i],
+                    },)
+    print(articles)
     return jsonify( 
         {
             "summary": {
                 "average": 25,
                 "reliability": 70,
-                "headArticles": [
-                    {
-                        "id": 0,
-                        "title": "Are cats real?",
-                        "reliability": 80,
-                        "bias": 12,
-                        "relevance": 70,
-                        "summary": "This is a really great summary about whether or not cats are real. Turns out, they are fake. Just like birds.",
-                    },
-                    {
-                        "id": 1,
-                        "title": "Old people, true or false?",
-                        "reliability": 2,
-                        "bias": 30,
-                        "relevance": 20,
-                        "summary": "This is a semi-reliable article. We may never know the answer to this age-old question. It is almost as controversial as the debate on the existence of cats, or even more pressing, the existence of birds.",
-                    },
-                ],
-                "articles": [
-                    {
-                        "id": 0,
-                        "title": "Another Title",
-                        "reliability": 30,
-                        "bias": 20,
-                        "relevance": 12,
-                    },
-                ],
+                "headArticles": head_articles,
+                "articles": articles,
             }
         }
     )

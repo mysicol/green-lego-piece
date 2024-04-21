@@ -1,5 +1,5 @@
 import openai
-from back.APIKeys import APIKeys
+from APIKeys import APIKeys
 
 class GPTInterface:
     def __init__(self):

@@ -1,5 +1,5 @@
 import requests
-from back.APIKeys import APIKeys
+from APIKeys import APIKeys
 
 VAR_NAME = 'NINJAS_API_KEY'
 
@@ -11,7 +11,7 @@ class Similarity:
         APIKeys.set_var(VAR_NAME)
         self.__apikey = APIKeys.get_key(VAR_NAME)
 
-    def getRating(self, article):
+    def get_rating(self, article):
         body = { 'text_1': self.__query, 'text_2': article }
         response = requests.post(self.__api_url, headers={'X-Api-Key': self.__apikey}, json=body)
         
