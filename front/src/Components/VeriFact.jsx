@@ -80,10 +80,12 @@ export default function VeriFact() {
             ({ id, title, reliability, bias, relevance, summary }) => (
               <div key={id} className="head-article">
                 <div className="head-article-header">
-                  <div className="head-title">{title}</div>
-                  <div className="head-reliability">{reliability}</div>
-                  <div className="head-bias">{bias}</div>
-                  <div className="head-relevance">{relevance}</div>
+                  <div className="article-title">"{title}"</div>
+                  <div className="head-reliability">
+                    Reliability: {reliability}%
+                  </div>
+                  <div className="head-bias">Bias: {bias}</div>
+                  <div className="head-relevance">Relevance: {relevance}%</div>
                 </div>
                 <div className="head-summary">{summary}</div>
               </div>
@@ -94,10 +96,12 @@ export default function VeriFact() {
           {summary.articles.map(
             ({ id, title, reliability, bias, relevance }) => (
               <div key={id} className="article">
-                <div className="article-title">{title}</div>
-                <div className="article-reliability">{reliability}</div>
-                <div className="article-bias">{bias}</div>
-                <div className="head-relevance">{relevance}</div>
+                <div className="article-title">"{title}"</div>
+                <div className="article-reliability">
+                  Reliability: {reliability}%
+                </div>
+                <div className="article-bias">Bias: {bias}</div>
+                <div className="head-relevance">Relevance: {relevance}%</div>
               </div>
             )
           )}

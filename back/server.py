@@ -44,7 +44,7 @@ def input():
                         "reliability": 2,
                         "bias": 30,
                         "relevance": 20,
-                        "summary": "This is a semi-reliable article. We may never know if old people are...",
+                        "summary": "This is a semi-reliable article. We may never know the answer to this age-old question. It is almost as controversial as the debate on the existence of cats, or even more pressing, the existence of birds.",
                     },
                 ],
                 "articles": [
