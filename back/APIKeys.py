@@ -8,4 +8,5 @@ class APIKeys:
         dotenv.load_dotenv()
         
     def get_key(variable):
+        print(os.environ)
         return os.environ[variable]
