@@ -14,5 +14,5 @@ class GPTInterface:
                 {"role": "user", "content": article_body}
             ]
         )
-        
+
         return completion.choices[0].message.content
