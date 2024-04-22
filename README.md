@@ -27,11 +27,11 @@ VeriFact's future involves converting it to a browser plug-in that would present
 
 You must have valid authentication keys for Ninjas API, OpenAI API, and Serp API to run. Store them in a file called `back/.env` in the following format:
 
-`OPENAI_API_KEY="[your OpenAI key]"`
+`OPENAI_API_KEY="your_openai_key"`
 
-`NINJAS_API_KEY="[your Ninjas key]"`
+`NINJAS_API_KEY="your_ninjas_key"`
 
-`SERP_API_KEY="[your Serp key]"`
+`SERP_API_KEY="your_serp_key"`
 
 ### Running on Windows
 
