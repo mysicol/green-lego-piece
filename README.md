@@ -22,7 +22,9 @@ A future direction for VeriFact is to convert it to a browser plug-in that would
 You must have valid authentication keys for Ninjas API, OpenAI API, and Serp API to run. Store them in a file called `back/.env` in the following format:
 
 `OPENAI_API_KEY="[your OpenAI key]"`
+
 `NINJAS_API_KEY="[your Ninjas key]"`
+
 `SERP_API_KEY="[your Serp key]`
 
 ### Running on Windows
@@ -44,6 +46,7 @@ Visit the localhost address generated to view the program.
 ### Running on Mac
 
 In a terminal, run:
+
 `cd back/` <br>
 `python3 -m venv venv` (only do the very first time to create venv) <br>
 `source venv/bin/activate` <br>
@@ -51,6 +54,7 @@ In a terminal, run:
 `python3 server.py` <br><br>
 
 In another terminal, run:
+
 `cd front/` <br>
 `npm i` <br>
 `npm run dev` <br>
