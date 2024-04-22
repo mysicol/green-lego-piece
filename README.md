@@ -9,11 +9,17 @@ With misinformation rampant in this digital world, it is harder than ever to det
 
 The dangers of misinformation on the internet have become more apparent in recent years, with fake news about current events exacerbating public health crises and security risks. 
 
-VeriFact combats this issue by utilizing user input of information found on the internet to display a credibility report, including a measurement of bias, quantified reliability, and summaries of the top credible news articles. First, the user enters a phrase describing a potential current event mentioned online, and search results are collected about the query. A database of 190 news websites, their reliabilities, and their political bias ratings from Ad Fontes Media was compiled to associate each of the news sources with ratings, which are then used to produce reliability and bias summary statistics for the topic. Ninja’s Text Similarity AI tool was used to determine each article’s relevance to the search term, which is also shown next to each article in the VeriFact output. The ChatGPT API tool creates summaries for the top articles from the most credible news sources to provide more information to the user. 
+VeriFact combats this issue by utilizing user input of information found on the internet to display a credibility report, including a measurement of bias, quantified reliability, and summaries of the top credible news articles.
 
-This program can help make finding information on the internet more equitable and inclusive of those who are less knowledgeable about source verification, including the aging population who may have less experience with judging misinformation on the web or finding credible sources related to a topic. Also, taking the time to find relevant, credible articles to fact-check information may not be feasible for people working multiple jobs, caring for children, or otherwise living fast-paced lives. VeriFact streamlines the fact-checking process to make credible information more accessible to all, which is very important to prevent the spread of confusing or dangerous misinformation. 
+First, the user enters a phrase describing a potential current event mentioned online, and search results are collected about the query. A database of 190 news websites along their reliabilities and political bias ratings from Ad Fontes Media was compiled and used to associate each of each output source with statistics and create summary statistics for the topic. Ninja’s Text Similarity AI tool was used to determine each article’s relevance to the search term, which is also shown next to each article in the VeriFact output. The ChatGPT API tool creates summaries for the articles from the most credible news sources to provide quick information to the user. 
 
-A future direction for VeriFact is to convert it to a browser plug-in that would present news output based on highlighted text. It could also be adapted to become a similar program to analyze information presented on social media like Facebook or information in video format, such as TikTok or Youtube. 
+VeriFact streamlines the fact-checking process to make credible information more accessible to all, which is very important to prevent the spread of confusing or dangerous misinformation. 
+
+VeriFact's future involves converting it to a browser plug-in that would present news output based on highlighted text. It could also be adapted to analyze information presented in video format, such as TikTok or Youtube. 
+
+![Input animation](/images/video-demo-1.gif)
+![Results animation](/images/video-demo-2.gif)
+![Results screenshot](/images/screenshot-demo.png)
 
 ## Setup
 
@@ -25,7 +31,7 @@ You must have valid authentication keys for Ninjas API, OpenAI API, and Serp API
 
 `NINJAS_API_KEY="[your Ninjas key]"`
 
-`SERP_API_KEY="[your Serp key]`
+`SERP_API_KEY="[your Serp key]"`
 
 ### Running on Windows
 
