@@ -16,16 +16,6 @@ class Modes(Enum):
 class Driver:
     def __init__(self, query):
         self.__query = query
-        
-    def load_willdumb():
-        import pickle
-        
-        with open('data/Trump_goes_to_jail.pkl', 'rb') as f:
-            data = pickle.load(f)
-
-            titles, desc, links, raw_links = data
-
-        return titles, desc, links, raw_links
 
     def go(self, mode=Modes.TESTING):
         if (mode == Modes.TESTING):
