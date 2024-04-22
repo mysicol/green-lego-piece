@@ -22,7 +22,7 @@ def input():
     print(verifact['verifact'])
     
     driver = Driver(verifact['verifact'])
-    data_table, summaries = driver.go(mode=Modes.TESTING)
+    data_table, summaries = driver.go(mode=Modes.RUNNING)
 
     # example json data
     head_articles = []
