@@ -63,8 +63,6 @@ class SearchEngine:
             self.__links.append("." + self._clean_up_link(news_result['link']))
             self.__raw_links.append(news_result['link'])
 
-        self.__serialize_results()
-
         return (self.__titles, self.__desc, self.__links, self.__raw_links)
     
     def __serialize_results(self):
