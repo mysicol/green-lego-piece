@@ -76,7 +76,7 @@ In another terminal, run:
 Visit the localhost address generated to view the program.
 
 ## Authors
-Francisco Cruz-Urbanc
+Francisco Cruz-Urbanc, fjc59@drexel.edu
 
 William Dorman
 
