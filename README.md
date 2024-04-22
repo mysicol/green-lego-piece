@@ -77,7 +77,11 @@ Visit the localhost address generated to view the program.
 
 ## Authors
 Francisco Cruz-Urbanc
+
 William Dorman
+
 Abigail Hatcher, ah3658@drexel.edu
+
 Krisi Hristova
+
 Charlie Meader
