@@ -5,6 +5,10 @@
 ## Overview
 With misinformation rampant in this digital world, it is harder than ever to determine if what we come across is true or false. This can especially be an issue for aging adults, who typically have less experience with the internet and who may be the target of scams. VeriFact is an AI tool that easily presents news sources and their summaries related to information found on the web, rated in terms of bias, reliability, and relevance. It can be used to gain a clearer perspective on if a fact is true or false to combat digital misinformation. 
 
+![Input animation](/images/video-demo-1.gif)
+![Results animation](/images/video-demo-2.gif)
+![Results screenshot](/images/screenshot-demo.png)
+
 ## Description
 
 The dangers of misinformation on the internet have become more apparent in recent years, with fake news about current events exacerbating public health crises and security risks. 
@@ -16,10 +20,6 @@ First, the user enters a phrase describing a potential current event mentioned o
 VeriFact streamlines the fact-checking process to make credible information more accessible to all, which is very important to prevent the spread of confusing or dangerous misinformation. 
 
 VeriFact's future involves converting it to a browser plug-in that would present news output based on highlighted text. It could also be adapted to analyze information presented in video format, such as TikTok or Youtube. 
-
-![Input animation](/images/video-demo-1.gif)
-![Results animation](/images/video-demo-2.gif)
-![Results screenshot](/images/screenshot-demo.png)
 
 ## Setup
 
@@ -39,7 +39,7 @@ In a terminal, run:
 
 `cd back/`
 
-`python -m venv venv` (only do the very first time to create venv)`
+`python -m venv venv` (only do the very first time to create venv)
 
 `venv/Scripts/activate`
 
