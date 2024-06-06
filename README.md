@@ -88,6 +88,6 @@ William Dorman
 
 Abigail Hatcher, ah3658@drexel.edu
 
-Krisi Hristova
+Krisi Hristova, kh3339@drexel.edu
 
 Charlie Meader
